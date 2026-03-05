@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -49,13 +48,7 @@ const LATENT_COLORS = [
   { fill:'#aab7b8', stroke:'#5d6d7e' },
 ];
 
-const DEFAULT_MODEL =
-`### Measurement
-Quality =~ enj_rew_z + enj_mov_z + nov_fre_z
-Entertainment =~ enj_fun_z + enj_fam_z
-Quality ~~ Entertainment
-### Structural
-fav_z ~ awa_z + Quality + Entertainment`;
+const DEFAULT_MODEL = '';
 
 const NODE_W=90, NODE_H=18, LAT_RX=58, LAT_RY=32, OBS_PAD_X=16, OBS_PAD_Y=20, LAT_PAD_Y=50;
 
@@ -145,7 +138,7 @@ function edgePt(n,tx,ty,gap,latRx){
 }
 
 function SEMDiagram() {
-  const [modelText,setModelText]=useState(DEFAULT_MODEL);
+  const [modelText,setModelText]=useState('');
   const [diagram,setDiagram]=useState(null);
   const [status,setStatus]=useState('Ready — Draw を押してください');
   const [viewBox,setViewBox]=useState({x:0,y:0,w:900,h:560});
@@ -165,7 +158,7 @@ function SEMDiagram() {
     }catch(e){setStatus('Parse error: '+e.message);}
   }
 
-  function doReset(){setModelText(DEFAULT_MODEL);doDraw(DEFAULT_MODEL);}
+  function doReset(){setModelText('');setDiagram(null);setStatus('Ready — Draw を押してください');}
 
   function doExport(){
     if(!diagram)return;
@@ -206,7 +199,7 @@ function SEMDiagram() {
     img.src=url;
   }
 
-  useEffect(function(){doDraw(DEFAULT_MODEL);},[]);
+
 
   const onNodeMD=function(e,id){e.stopPropagation();dragging.current=id;};
   const onSvgMD=function(e){if(!dragging.current)panStart.current={mx:e.clientX,my:e.clientY,vb:Object.assign({},viewBox)};};
